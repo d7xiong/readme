@@ -49,3 +49,8 @@
 	registerDubboConfigBindingBeanPostProcessor(prefix, beanName, multiple, registry);
 		注册每个EnableDubboConfigBinding对象处理器DubboConfigBindingBeanPostProcessor，实现postProcessBeforeInitialization(Object bean, String beanName)，根据prefix注入值到配置bean中
 		完成配置到配置bean绑定
+
+### RelaxedDubboConfigBinder
+
+    bind(String prefix, C dubboConfig)
+        配置绑定
