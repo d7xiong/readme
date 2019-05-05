@@ -20,16 +20,26 @@
 			DubboConfigBindingRegistrar.registerBeanDefinitions()
 
 ##EnableDubboConfigBindings
+
 		@EnableDubboConfigBindings({
+			
 			@EnableDubboConfigBinding(prefix = "dubbo.application", type = ApplicationConfig.class),
+			
 			@EnableDubboConfigBinding(prefix = "dubbo.module", type = ModuleConfig.class),
+			
 			@EnableDubboConfigBinding(prefix = "dubbo.registry", type = RegistryConfig.class),
+			
 			@EnableDubboConfigBinding(prefix = "dubbo.protocol", type = ProtocolConfig.class),
+			
 			@EnableDubboConfigBinding(prefix = "dubbo.monitor", type = MonitorConfig.class),
+			
 			@EnableDubboConfigBinding(prefix = "dubbo.provider", type = ProviderConfig.class),
+			
 			@EnableDubboConfigBinding(prefix = "dubbo.consumer", type = ConsumerConfig.class)
 		})
+		
 		public static class Single {
+		
 		}
 
 ###DubboConfigBindingRegistrar
