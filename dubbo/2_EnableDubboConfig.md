@@ -1,4 +1,4 @@
-### com.alibaba.dubbo.config.spring.context.annotation.EnableDubboConfig注解
+### com.alibaba.dubbo.config.spring.context.annotation.EnableDubboConfig注解 配置与配置Bean属性绑定
 
 ## 加载流程
     dubbo-spring-boot-autoconfigure-0.2.0.jar包内META-INF/spring.factories配置spring-boot autoconfigure类路径org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.alibaba.boot.dubbo.autoconfigure.DubboAutoConfiguration
