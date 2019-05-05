@@ -19,7 +19,7 @@
 			
 			DubboConfigBindingRegistrar.registerBeanDefinitions()
 
-##EnableDubboConfigBindings
+## EnableDubboConfigBindings
 
 		@EnableDubboConfigBindings({
 			
@@ -42,7 +42,7 @@
 		
 		}
 
-###DubboConfigBindingRegistrar
+### DubboConfigBindingRegistrar
 
 	registerDubboConfigBean(beanName, configClass, registry);
 		注册每一个EnableDubboConfigBinding
