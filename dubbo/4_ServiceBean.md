@@ -1,6 +1,6 @@
 com.alibaba.dubbo.config.spring.ServiceBean<T> extends ServiceConfig<T>
 
-doExport() -> diExportUrls() -> doExportUrlsFor1Protocol(ProtocolConfig protocolConfig, List<URL> registryURLs)
+    doExport() -> diExportUrls() -> doExportUrlsFor1Protocol(ProtocolConfig protocolConfig, List<URL> registryURLs)
 
     loadConfigs -> loadRegistries -> export
 
