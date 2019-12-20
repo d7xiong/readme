@@ -5,4 +5,6 @@
 
 > ServiceAnnotation Dubbo Spring Bean注册及Dubbo服务暴露
 
+> ServiceBean 对外暴露服务
+
 
