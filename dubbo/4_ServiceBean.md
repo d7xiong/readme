@@ -13,7 +13,17 @@ com.alibaba.dubbo.config.spring.ServiceBean<T> extends ServiceConfig<T>
         String key = serviceKey(url);
         DubboExporter<T> exporter = new DubboExporter<T>(invoker, key, exporterMap);
         exporterMap.put(key, exporter);
+        //
         openServer(url);
+            createServer()
+                Exchangers.bind(url, requestHandler)    requestHandler -> DubboProtocol
+                HeaderExchanger.bind(url, new DecodeHandler(new HeaderExchangeHandler(handler))))
+                NettyTransporter.bind(url, channelHandler)
+                    new NettyServer(url, channelHandler)
+                        ChannelHandlers.wrap(handler, ExecutorUtil.setThreadName(url, SERVER_THREAD_POOL_NAME)))
+                        ChannelHandlers.getInstance().wrapInternal(handler, url);
+                        // SPI获取Server Dispatcher
+                        new MultiMessageHandler(new HeartbeatHandler(ExtensionLoader.getExtensionLoader(Dispatcher.class).getAdaptiveExtension().dispatch(handler, url)));
         optimizeSerialization(url);
 
 

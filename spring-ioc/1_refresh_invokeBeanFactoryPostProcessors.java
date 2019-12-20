@@ -4,6 +4,12 @@ invokeBeanFactoryPostProcessors
 
 ===============================================================================================================
 
+invokeBeanFactoryPostProcessors(beanFactory);
+	PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory, getBeanFactoryPostProcessors());
+
+
+===============================================================================================================
+
 1.	如果beanFactory不是BeanDefinitionRegistry类型:执行已经注入beanFactory中的beanFactoryPostProcessors;
 	如果beanFactory是BeanDefinitionRegistry类型:
 		1)	先执行实现BeanDefinitionRegistryPostProcessor接口的已经注入beanFactory中的beanFactoryPostProcessors
