@@ -27,6 +27,7 @@ ExtensionLoader.getAdaptiveExtension()
 
 		injectExtension(T instance)	-> call setters method
 
+
 // 获取扩展点对象
 ExtensionLoader.getExtension(String name)
 	createExtension(name);
@@ -38,9 +39,22 @@ ExtensionLoader.getExtension(String name)
 		        loadDirectory(extensionClasses, SERVICES_DIRECTORY);		-> META-INF/services/
 		        	classLoader.getResources(dir + type.getName())
 		injectExtension(instance);
+		// 如果有包装类，循环创建包装类返回 QosProtocolWrapper,ProtocolListenerWrapper,ProtocolFilterWrapper
+		/**	QosProtocolWrapper
+			if "registry".equals(invoker.getUrl().getProtocol()) startQosServer(url);
+			protocol.refer(type, url);
+		*/
+		/** ProtocolListenerWrapper
+			if "registry".equals(invoker.getUrl().getProtocol()) return protocol.refer(type, url);
+			return new ListenerInvokerWrapper<T>(protocol.refer(type, url),Collections.unmodifiableList(ExtensionLoader.getExtensionLoader(InvokerListener.class).getActivateExtension(url, Constants.INVOKER_LISTENER_KEY)));
+		*/
+		/** ProtocolFilterWrapper
+			if "registry".equals(invoker.getUrl().getProtocol()) return protocol.refer(type, url);
+			return protocol.export(buildInvokerChain(invoker, Constants.SERVICE_FILTER_KEY, Constants.PROVIDER));
+		*/
 		injectExtension((T) wrapperClass.getConstructor(type).newInstance(instance));
 
-
+		
 
 ================================ProxyFactory$Adaptive.java by createAdaptiveExtensionClassCode()============================
 
