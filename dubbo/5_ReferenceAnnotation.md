@@ -12,7 +12,7 @@ com.alibaba.dubbo.config.annotation.Reference注解依赖注入:
             postProcessMergedBeanDefinition.postProcessMergedBeanDefinition(beanDefinition, beanType, beanName);
 
 
-            实现接口方法postProcessMergedBeanDefinition.postProcessPropertyValues()在bean实例创建后注@Reference依赖的Bean
+            实现接口方法InstantiationAwareBeanPostProcessor.postProcessPropertyValues()在bean实例创建后注@Reference依赖的Bean
             实际注入的对象为ReferenceBean.getObject()
             postProcessPropertyValues()
                 InjectionMetadata.inject()
@@ -32,6 +32,8 @@ com.alibaba.dubbo.config.annotation.Reference注解依赖注入:
                                get()
                                创建代理对象实例
                                init()
+                               createProxy()
+                               proxyFactory.getProxy(invoker)
                 field.set(bean, referenceBean.getObject());
 
 

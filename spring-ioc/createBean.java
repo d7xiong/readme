@@ -12,33 +12,34 @@
 					//Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
 					----> 此方法内如果返回一个bean实例，将不再走createBean内下方方法
 					resolveBeforeInstantiation(beanName, mbd)
-						applyBeanPostProcessorsBeforeInstantiation(beanClass, beanName) -> InstantiationAwareBeanPostProcessor.postProcessBeforeInstantiation(beanClass, beanName)
+						applyBeanPostProcessorsBeforeInstantiation(beanClass, beanName) -> Object InstantiationAwareBeanPostProcessor.postProcessBeforeInstantiation(beanClass, beanName)
 						// 此方法内postProcessAfterInitialization返回null对象会导致此方法返回null
-						applyBeanPostProcessorsAfterInitialization(existingBean, beanName) -> BeanPostProcessor.postProcessAfterInitialization(bean, beanName)
+						applyBeanPostProcessorsAfterInitialization(existingBean, beanName) -> void BeanPostProcessor.postProcessAfterInitialization(bean, beanName)
 					doCreateBean(beanName, mbdToUse, args)
 						createBeanInstance(beanName, mbd, args);
 							//创建一个BeanWrapper包装的bean实例beanInstance
 							new BeanWrapperImpl(beanInstance);
-						applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName); -> MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition(beanDefinition, beanType, beanName)
+						applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName); -> void MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition(beanDefinition, beanType, beanName)
+						// Obtain a reference for early access to the specified bean
+						getEarlyBeanReference(beanName, mbd, bean)						  -> Object SmartInstantiationAwareBeanPostProcessor.getEarlyBeanReference(bean, beanName)
 						populateBean(beanName, mbd, instanceWrapper);
-							-> InstantiationAwareBeanPostProcessor.postProcessAfterInstantiation(bean, beanName)
+							-> boolean InstantiationAwareBeanPostProcessor.postProcessAfterInstantiation(bean, beanName)
 							autowireByName(beanName, mbd, bw, newPvs);
 							autowireByType(beanName, mbd, bw, newPvs);
-							// 例:@Autowired注解由AutowiredAnnotationBeanPostProcessor.postProcessProperties()实现依赖注入
+							// 例:@Autowired注解由AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues()实现依赖注入
 							// CommonAnnotationBeanPostProcessor:逻辑一样，它处理的JSR-250的注解，比如@Resource
-							-> InstantiationAwareBeanPostProcessor.postProcessProperties(propertyValues, bean, beanName)
-							-> InstantiationAwareBeanPostProcessor.postProcessPropertyValues(pvs,filteredPds, beanInstance, beanName);
+							-> PropertyValues InstantiationAwareBeanPostProcessor.postProcessPropertyValues(pvs,filteredPds, beanInstance, beanName);
 							applyPropertyValues(beanName, mbd, bw, pvs)
 
 						initializeBean(beanName, exposedObject, mbd);
 							invokeAwareMethods(beanName, bean);	-> BeanNameAware,BeanClassLoaderAware,BeanFactoryAware
 							// 此方法内如果postProcessBeforeInitialization返回null，会直接导致方法返回null
-							applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName); -> BeanPostProcessor.postProcessBeforeInitialization(result, beanName)
+							applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName); -> Object BeanPostProcessor.postProcessBeforeInitialization(result, beanName)
 							invokeInitMethods(beanName, wrappedBean, mbd);
 								((InitializingBean) bean).afterPropertiesSet();
 								invokeCustomInitMethod(beanName, bean, mbd);
 							// 此方法内postProcessAfterInitialization返回null对象会导致此方法返回null
-							applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);	-> BeanPostProcessor.postProcessAfterInitialization(result, beanName)
+							applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);	-> Object BeanPostProcessor.postProcessAfterInitialization(result, beanName)
 						// AbstractBeanFactory.class
 						registerDisposableBeanIfNecessary(beanName, bean, mbd);
 
@@ -60,5 +61,5 @@
 							factoryBean.getObject();
 						postProcessObjectFromFactoryBean(object, beanName)
 							// 此方法内postProcessAfterInitialization返回null对象会导致此方法返回null
-							applyBeanPostProcessorsAfterInitialization(object, beanName);		-> BeanPostProcessor.postProcessAfterInitialization(result, beanName)
+							applyBeanPostProcessorsAfterInitialization(object, beanName);		-> Object BeanPostProcessor.postProcessAfterInitialization(result, beanName)
 

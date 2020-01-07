@@ -30,6 +30,7 @@ extends FactoryBeanRegistrySupport extends DefaultSingletonBeanRegistry extends 
 
 preInstantiateSingletons()
 	if(isFactoryBean(beanName))
+		getBean(&beanName)
 		isEagerInit = (factory instanceof SmartFactoryBean &&((SmartFactoryBean<?>) factory).isEagerInit()) -> SmartFactoryBean.isEagerInit()
 		if(isEagerInit)
 			getBean(beanName)
@@ -61,6 +62,8 @@ preInstantiateSingletons()
 							//创建一个BeanWrapper包装的bean实例beanInstance
 							new BeanWrapperImpl(beanInstance);
 						applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName); -> void MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition(beanDefinition, beanType, beanName)
+						// Obtain a reference for early access to the specified bean
+						getEarlyBeanReference(beanName, mbd, bean)						  -> Object SmartInstantiationAwareBeanPostProcessor.getEarlyBeanReference(bean, beanName)
 						populateBean(beanName, mbd, instanceWrapper);
 							// 默认返回true，返回false不再执行populateBean后续方法
 							// Give any InstantiationAwareBeanPostProcessors the opportunity to modify the
@@ -69,9 +72,8 @@ preInstantiateSingletons()
 							-> boolean InstantiationAwareBeanPostProcessor.postProcessAfterInstantiation(bean, beanName)
 							autowireByName(beanName, mbd, bw, newPvs);
 							autowireByType(beanName, mbd, bw, newPvs);
-							// 例:@Autowired注解由AutowiredAnnotationBeanPostProcessor.postProcessProperties()实现依赖注入
+							// 例:@Autowired注解由AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues()实现依赖注入
 							// CommonAnnotationBeanPostProcessor:逻辑一样，它处理的JSR-250的注解，比如@Resource
-							-> PropertyValues InstantiationAwareBeanPostProcessor.postProcessProperties(propertyValues, bean, beanName)
 							-> PropertyValues InstantiationAwareBeanPostProcessor.postProcessPropertyValues(pvs,filteredPds, beanInstance, beanName);
 							applyPropertyValues(beanName, mbd, bw, pvs)
 
