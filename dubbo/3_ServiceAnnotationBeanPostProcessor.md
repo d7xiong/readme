@@ -1,4 +1,7 @@
 
+ServiceAnnotationBeanPostProcessor是一个BeanFactoryPostProcessor,在Spring容器创建Bean实例前，扫描DubboBean注册到容器中(注册2个Bean，一个普通Bean，一个DubboServiceBean)，随后续SpringBean实例化而实例化
+
+
 com.alibaba.dubbo.config.annotation.Service注解Bean注册及服务暴露:
 
     1. dubbo-spring-boot-autoconfigure-0.2.0.jar包内META-INF/spring.factories配置spring-boot autoconfigure类路径
@@ -9,7 +12,7 @@ com.alibaba.dubbo.config.annotation.Service注解Bean注册及服务暴露:
 
     3. ServiceAnnotationBeanPostProcessor实现接口BeanDefinitionRegistryPostProcessor
 
-           实现接口方法postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)完成@Service注解Bean的扫描及@Service BeanDefinition注册(Spring容器首先加载BeanDefinition，再通过BeanDefinition创建实例bean)
+           实现接口方法postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)完成@Service注解Bean的扫描及@Service BeanDefinition注册(resolvePackagesToScan)(Spring容器首先加载BeanDefinition，再通过BeanDefinition创建实例bean)
 
            方法注册两个beanDefination,分别为spring普通BeanDefinition和dubbo BeanDefinition，两者命名规则不同,注册类不同
 

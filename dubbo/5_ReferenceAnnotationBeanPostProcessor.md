@@ -1,4 +1,6 @@
 
+ReferenceAnnotationBeanPostProcessor是一个普通BeanPostProcessor
+
 com.alibaba.dubbo.config.annotation.Reference注解依赖注入:
 
     1. dubbo-spring-boot-autoconfigure-0.2.0.jar包内META-INF/spring.factories配置spring-boot autoconfigure类路径
@@ -8,7 +10,7 @@ com.alibaba.dubbo.config.annotation.Reference注解依赖注入:
     2. 自动配置类DubboAutoConfiguration中创建@Reference注解后置处理器@bean:ReferenceAnnotationBeanPostProcessor
 
     3. ReferenceAnnotationBeanPostProcessor实现接口MergedBeanDefinitionPostProcessor
-            实现接口方法postProcessMergedBeanDefinition(beanDefinition, beanType, beanName)在Bean创建前查找bean内@Reference依赖添加到beanDefinition中
+            实现接口方法postProcessMergedBeanDefinition(beanDefinition, beanType, beanName)在Bean创建前查找bean内@Reference依赖信息添加到beanDefinition中
             postProcessMergedBeanDefinition.postProcessMergedBeanDefinition(beanDefinition, beanType, beanName);
 
 
